@@ -62,5 +62,10 @@ The platform is designed with two main goals:
 Contributions are welcome. Please open an issue or submit a pull request if you want to add a feature or improve the UI.
 
 ## 📸 Screenshots
-
+![screenshot 1](https://github.com/StevenTharwat/YouthQuestions/blob/main/Images/1.png)
+![screenshot 2](https://github.com/StevenTharwat/YouthQuestions/blob/main/Images/2.png)
+![screenshot 3](https://github.com/StevenTharwat/YouthQuestions/blob/main/Images/3.png)
+![screenshot 4](https://github.com/StevenTharwat/YouthQuestions/blob/main/Images/4.png)
+![screenshot 5](https://github.com/StevenTharwat/YouthQuestions/blob/main/Images/5.png)
+![screenshot 6](https://github.com/StevenTharwat/YouthQuestions/blob/main/Images/6.png)
 
