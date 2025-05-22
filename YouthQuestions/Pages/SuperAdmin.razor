@@ -1,0 +1,80 @@
+﻿@using System.Dynamic;
+@using System.Data;
+@page "/dfc3VwZXJBZG1pbjEyMzc4OTQ1Ng;;c="
+
+
+@if(ifHasPass){ @*local storage contain the same custm-base64 increpted pass in the db*@
+
+      <SfCard>
+        <div class="card-body">
+            <SfTextBox Type="InputType.Text" EnableRtl="true" @bind-Value="@txtSql" Multiline="true" ID="IDtxtSql"  FloatLabelType="@FloatLabelType.Auto" Placeholder=" sql " ></SfTextBox>
+            <p class="error">@sqlErrorMessage</p>
+            <div class=buttons>
+                    <SfButton class="btn mx-3 my-3"   OnClick="@sqlRunTable" CssClass="e-primary">تنفيذ جدول</SfButton>
+                    <SfButton class="btn mx-3 my-3"   OnClick="@sqlRunCommand" CssClass="e-primary">تنفيذ امر</SfButton>
+            </div>
+        </div>
+    </SfCard>
+
+    @if (RenderGrid) 
+{
+<SfGrid @ref="Grid" DataSource="@Data" TValue="ExpandoObject" AllowResizing="true" AllowPaging="false" AllowFiltering="true" AllowSorting="true" AllowGrouping="true">
+    <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+</SfGrid>
+}
+}
+else{
+
+<h3>ادخل كلمة المرور</h3>
+    <SfCard>
+        <div class="card-body">
+            <SfTextBox Type="InputType.Text" EnableRtl="true" @bind-Value="@txtPass" Multiline="true" ID="IDtxtPass"  FloatLabelType="@FloatLabelType.Auto" Placeholder=" كلمة المرور" ></SfTextBox>
+            <p class="error">@errorMessage</p>
+            <div class=buttons>
+                    <SfButton class="btn mx-3 my-3"   OnClick="@UserPassEnter" CssClass="e-primary">ادخال</SfButton>
+            </div>
+        </div>
+    </SfCard>
+}
+
+
+
+
+
+
+<style>
+    .error{
+        text-align:right;
+        color:red;
+    }
+    .message{
+        text-align:right;
+        color:green;
+    }
+    .buttons{
+        align-content:space-around;
+        align-items:end;
+        text-align:center;
+    }
+    .e-btn{
+        width: 200px;
+    }
+    .text-right{
+        text-align:right;
+    }
+    .e-checkbox-wrapper .e-label, .e-css.e-checkbox-wrapper .e-label {
+        font-size:17px;
+    }
+    .e-checkbox-wrapper.e-rtl .e-label, .e-css.e-checkbox-wrapper.e-rtl .e-label {
+        color:red;
+    }
+    span.e-label{
+        color:red;
+    }
+    .e-listview:not(.e-list-template) .e-list-item{
+        height: auto;
+    }
+    .e-listview .e-list-text{
+        white-space: break-spaces;
+    }
+</style>

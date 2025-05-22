@@ -1,0 +1,60 @@
+﻿@page "/dfcGRmTGF5b3V0c="
+@using System.Data
+@using YouthQuestions
+@layout EmptyLayout
+
+<h3> اسأله الشباب يوم @DateTime.Today.ToString("yyyy/MM/dd")</h3>
+
+    @foreach (KeyValuePair<string, List<string>> item in dic)
+    {
+            <SfCard>
+                <h5 class="card-title">@item.Key</h5>
+                <hr />
+                <h6>الايجابات:</h6>
+                @foreach (string answer in item.Value)
+                {
+                    <SfCard>
+                        <p class="card-text">@answer</p>
+                    </SfCard>
+                }
+            </SfCard>
+            <br />
+            <br />
+    }
+
+
+@code {
+    DataTable Questions = new DataTable();
+    Dictionary<string, List<string>> dic = new Dictionary<string, List<string>>();
+    string currentID = "";
+    protected override void OnInitialized()
+    {
+        Questions = data.getpdfQuestionsAndAnswersTable();
+
+        foreach (DataRow item in Questions.Rows)
+
+        {
+            if (item["questionID"].ToString() == currentID)
+            {
+                List<string> temp = dic[item["Question"].ToString()];
+                temp.Add(item["answer"].ToString());
+                dic[item["Question"].ToString()] = temp;
+            }
+            else
+            {
+                dic.Add(item["Question"].ToString(), new List<string> { item["answer"].ToString() });
+                currentID = item["questionID"].ToString();
+            }
+        }
+    }
+}
+
+<style>
+    .e-card {
+        padding: 8px;
+        margin-top: 8px;
+    }
+    body{
+        margin: 10px;
+    }
+</style>

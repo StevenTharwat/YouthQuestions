@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+
+# Ignore build results
+*.dll
+*.exe
+*.pdb
+
+# Ignore Visual Studio files
+.vs/
+.vscode/

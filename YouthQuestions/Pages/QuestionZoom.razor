@@ -1,0 +1,91 @@
+﻿@page "/QZ/{value?}"
+
+
+@if (result == "-1")
+{
+    <h1>هذا السؤال غير موجود</h1>
+}
+else
+{
+    <h1>@result</h1>
+    <hr />
+    @if (Answers.Rows.Count > 0)
+    {
+        <h3>اجابات هذا السؤال: </h3>
+        <div class="row">
+            @foreach (DataRow item in Answers.Rows)
+            {
+
+                <div class="col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">@item["Answer"]</p>
+                            <SfButton OnClick="() => loveClick(item[0].ToString())" style="@changeCSS(item[0].ToString())">@item["LoveCount"] <i class="oi oi-heart"></i></SfButton>
+                            @if (IsManager)
+                            {
+                                <SfButton OnClick="() => deleteClick(item[0].ToString())" CssClass="mr-1 e-Custom-danger"><i class="oi oi-x"></i></SfButton>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+
+        <SfDialog Width="250px" ShowCloseIcon="false" IsModal="true" @bind-Visible="@IsVisible">
+            <DialogTemplates>
+                <Header> تاكيد </Header>
+                <Content> هل انت متاكد من مسح هذا السؤال </Content>
+            </DialogTemplates>
+            <DialogButtons>
+                <DialogButton Content="تاكيد" IsPrimary="false" CssClass="e-danger" OnClick="() => DialogOkClick(deletedID)" />
+                <DialogButton Content="الغاء" IsPrimary="true" OnClick="() => DialogCloseClick()" />
+            </DialogButtons>
+        </SfDialog>
+    }
+    else
+    {
+        <h4>هذا السؤال ليس له اي ايجابات</h4>
+    }
+}
+
+
+<h4>@exption</h4>
+
+<style>
+    .question {
+        font-size: 20px;
+    }
+
+    .e-danger {
+        background-color: #dc3545 !important;
+        border-color: #dc3545 !important;
+    }
+
+    .e-Custom-danger {
+        background-color: black !important;
+        border-color: black !important;
+    }
+
+    .mr-1 {
+        margin-right: 4px;
+    }
+
+    .custom-btn-outline-success, .custom-btn-outline-success:hover {
+        color: #fff;
+        background-color: #198754;
+        border-color: #198754;
+    }
+
+    .customLovebefor, .customLovebefor:hover {
+        color: gray;
+        background-color: #FFF;
+        border-color: gray;
+    }
+
+        .customLoveAfter, .customLoveAfter:hover, .customLovebefor:focus {
+            color: #dc3545;
+            background-color: #FFF;
+            border-color: gray;
+        }
+</style>

@@ -1,0 +1,155 @@
+﻿@page "/AddQuestion"
+
+<PageTitle>AddQuestion</PageTitle>
+
+@*<h1>AddQuestion</h1>*@
+
+
+<div class="row">
+    <div class="col">
+        <SfCard>
+            <div class="card-body">
+                <h5 class="card-title text-center">اضف سؤال</h5> 
+                    <SfTextBox Type="InputType.Text" EnableRtl="true" @bind-Value="@txtQuestion" Multiline="true" ID="IDtxtQuestion"  FloatLabelType="@FloatLabelType.Auto" Placeholder="السؤال" ></SfTextBox>
+                    <p class="error">@errorMessage</p>
+                    @*<SfTextBox Type="InputType.Text" EnableRtl="true" @bind-Value="@txtName" Multiline="true" ID="IDtxtName"  FloatLabelType="@FloatLabelType.Auto" Placeholder="اسمك"  Enabled="!HideMe"></SfTextBox>
+                    <p class="message">@nameMessage</p>
+                    <div class="text-right" >
+                        <SfCheckBox Label="اخفاء اسمي" EnableRtl="true" @bind-Checked="@HideMe"></SfCheckBox>
+                    </div>*@
+            </div>
+        </SfCard>
+        <br/>
+    </div>
+    
+        <div class=buttons>
+            <SfButton class="btn mx-3 my-3"   OnClick="btnOk"     CssClass="e-primary">موافق</SfButton>
+            <SfButton class="btn mx-3 my-3 "  OnClick="btnCancel" CssClass="e-danger">الغاء</SfButton>
+        </div>
+        <br/>
+        <br/>
+</div>
+@if (yourQuestions.Count > 1)
+{
+    <h2>اسالتك:</h2>
+    <div class="row">
+        @foreach (string item in yourQuestions) //store questions with IDs and get them and convert them to table -- delete past questions
+        {
+            if (item != DateTime.Today.ToString())
+            {
+                <div class="col-lg-4 mb-4">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-text">@item</p>
+                    <SfButton OnClick="() => btnEdit(item)" CssClass="e-primary">تعديل<i class="oi oi-pencil"></i></SfButton>
+                    @if(editQuestion == item){
+                        <SfTextBox Type="InputType.Text" EnableRtl="true" @bind-Value="@txtEditQuestion" Multiline="true" ID="IDtxtEditQuestion"  FloatLabelType="@FloatLabelType.Auto" Placeholder="التعديل" ></SfTextBox>
+                        <p class="error">@EditerrorMessage</p>
+                        <SfButton OnClick="() => btnEditOK(item)" CssClass="e-primary">موافق<i class="oi oi-pencil"></i></SfButton>
+                        <SfButton OnClick="() => btnEditDelete(item)" CssClass="e-danger">مسح من قائمتي<i class="oi oi-pencil"></i></SfButton>
+                        <SfButton OnClick="() => btnEditCancel(item)" CssClass="e-danger">الغاء<i class="oi oi-pencil"></i></SfButton>
+                    }
+                  </div>
+                 </div>
+                </div> 
+            }
+        }
+    </div>
+
+}
+
+
+<SfDialog Width="250px" ShowCloseIcon="false" IsModal="true" @bind-Visible="@IsVisible">
+    <DialogTemplates>
+        <Header> عمليه ناجحه </Header>
+        <Content> سيتم ارسال سؤالك لاحد الخدام للموافقه ^_^ </Content>
+    </DialogTemplates>
+    <DialogButtons>
+        <DialogButton Content="تمام" IsPrimary="true" OnClick="@OkClick" />
+    </DialogButtons>
+    <span id="message">@ClickStatus</span>
+</SfDialog>
+
+
+
+
+<style>
+    .error{
+        text-align:right;
+        color:red;
+    }
+    .message{
+        text-align:right;
+        color:green;
+    }
+    .buttons{
+        align-content:space-around;
+        align-items:end;
+        text-align:center;
+    }
+    .e-btn{
+        width: 200px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .text-right{
+        text-align:right;
+    }
+    .e-checkbox-wrapper .e-label, .e-css.e-checkbox-wrapper .e-label {
+        font-size:17px;
+    }
+    .e-checkbox-wrapper.e-rtl .e-label, .e-css.e-checkbox-wrapper.e-rtl .e-label {
+        color:red;
+    }
+    span.e-label{
+        color:red;
+    }
+</style>
+
+
+
+@*        <br/>
+<br/>
+<hr />
+<h3>اسالتك:</h3>
+
+        <div class="row">
+            <div class="col">
+                <SfCard>
+                    <div class="card-body">
+                        <SfListView @ref="list" DataSource="@Data" ShowCheckBox="true">
+                            <ListViewFieldSettings TValue="Question" Id="Id" Text="Text" IsChecked="IsChecked"></ListViewFieldSettings>
+                        </SfListView>
+
+                        <div class=buttons>
+                                <SfButton class="btn mx-3 my-3"   OnClick="btnEdit"     CssClass="e-primary">تعديل</SfButton>
+                                <SfButton class="btn mx-3 my-3 "  OnClick="btnDelete" CssClass="e-danger">حذف</SfButton>
+                            </div>
+                        </div>
+                </SfCard>
+                <br/>
+            </div>
+        </div>
+        
+        @code
+        {
+            private List<Question> Data = new List<Question>();
+            string localJson = "";
+            async Task btnEdit()
+            {
+
+            }
+        
+            async Task btnDelete()
+            {
+
+            }
+
+            protected override async Task OnAfterRenderAsync(bool firstRender)
+            {
+                localJson = await localStorage.GetItemAsync<string>("sflistview--6070Json");
+                if (firstRender) StateHasChanged();
+            }
+        }
+        
+        *@

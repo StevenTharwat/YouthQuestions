@@ -1,0 +1,145 @@
+﻿@page "/Admin"
+
+@if (@localPass == "")
+{
+    <h3>wating ...</h3>
+}
+else
+{
+    @if (ifHasPass())
+    { @*local storage contain the same custm-base64 increpted pass in the db*@
+
+        <h3>الاسالة الغير معروضه للعامه :</h3>
+        @if (Data.Count > 0)
+        {
+            <div class="row">
+                <div class="col">
+                    <SfCard>
+                        <div class="card-body">
+                            <SfListView @ref="list" DataSource="@Data" ShowCheckBox="true">
+                                <ListViewFieldSettings TValue="Question" Id="Id" Text="Text" IsChecked="IsChecked"></ListViewFieldSettings>
+                            </SfListView>
+
+                            <div class=buttons>
+                                <SfButton class="btn mx-3 my-3" OnClick="btnOk" CssClass="e-primary">موافقة</SfButton>
+                                <SfButton class="btn mx-3 my-3 " OnClick="btnDelete" CssClass="e-danger">حذف</SfButton>
+                            </div>
+                        </div>
+                    </SfCard>
+                    <br />
+                </div>
+            </div>
+        }
+        <hr />
+        <h3>الاسالة المعدل عليها :</h3>
+        @if (EditData.Count > 0)
+        {
+            <div class="row">
+                <div class="col">
+                    <SfCard>
+                        <div class="card-body">
+                            <SfListView @ref="EditQuestionlist" DataSource="@EditData" ShowCheckBox="true">
+                                <ListViewFieldSettings TValue="Question" Id="Id" Text="Text" IsChecked="IsChecked"></ListViewFieldSettings>
+                            </SfListView>
+
+                            <div class=buttons>
+                                <SfButton class="btn mx-3 my-3" OnClick="btnEditQuestionOk" CssClass="e-primary">موافقة</SfButton>
+                                <SfButton class="btn mx-3 my-3 " OnClick="btnEditQuestionDelete" CssClass="e-danger">حذف</SfButton>
+                            </div>
+                        </div>
+                    </SfCard>
+                    <br />
+                </div>
+            </div>
+        }
+        <hr />
+        <h3>اجابات الاساله :</h3>
+        @if (AnswersTable.Rows.Count > 0)
+        {
+            <SfCard>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (DataRow item in AnswersTable.Rows)
+                        {
+                            <div class="col-lg-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@item["Question"]</h5>
+                                        <p class="card-text">@item["Answer"]</p>
+                                        <SfButton OnClick="() => btnApproveAnswer(item[0].ToString())" CssClass="e-primary">موافق </SfButton>
+                                        <SfButton OnClick="() => btnDeleteAnswer(item[0].ToString())" CssClass="e-danger">حذف</SfButton>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </SfCard>
+            <br />
+        }
+    }
+    else
+    {
+        <h3>ادخل كلمة المرور</h3>
+        <SfCard>
+            <div class="card-body">
+                <SfTextBox Type="InputType.Text" EnableRtl="true" @bind-Value="@txtPass" Multiline="true" ID="IDtxtPass" FloatLabelType="@FloatLabelType.Auto" Placeholder=" كلمة المرور"></SfTextBox>
+                <p class="error">@errorMessage</p>
+                <div class=buttons>
+                    <SfButton class="btn mx-3 my-3" OnClick="@UserPassEnter" CssClass="e-primary">ادخال</SfButton>
+                </div>
+            </div>
+        </SfCard>
+    }
+}
+
+
+
+
+
+
+<style>
+    .error {
+        text-align: right;
+        color: red;
+    }
+
+    .message {
+        text-align: right;
+        color: green;
+    }
+
+    .buttons {
+        align-content: space-around;
+        align-items: end;
+        text-align: center;
+    }
+
+    .e-btn {
+        width: 200px;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .e-checkbox-wrapper .e-label, .e-css.e-checkbox-wrapper .e-label {
+        font-size: 17px;
+    }
+
+    .e-checkbox-wrapper.e-rtl .e-label, .e-css.e-checkbox-wrapper.e-rtl .e-label {
+        color: red;
+    }
+
+    span.e-label {
+        color: red;
+    }
+
+    .e-listview:not(.e-list-template) .e-list-item {
+        height: auto;
+    }
+
+    .e-listview .e-list-text {
+        white-space: break-spaces;
+    }
+</style>
