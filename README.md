@@ -55,6 +55,7 @@ The platform is designed with two main goals:
 3. Make sure all required Syncfusion packages are installed.
 4. Set the `Startup` project to the Blazor app.
 5. Run the application (`F5` or Ctrl+F5).
+6. put your RegisterLicense in `program.cs`
 
 ## 🤝 Contributing
 
